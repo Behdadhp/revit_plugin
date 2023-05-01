@@ -87,7 +87,7 @@ def show_components():
     }
     parts = [Wall, Floor, RoofBase]
     for part in parts:
-        result_dict = CalcAttr(part).create_dict(components)
+        result_dict = Calc(part).create_dict(components)
 
     return result_dict
 
