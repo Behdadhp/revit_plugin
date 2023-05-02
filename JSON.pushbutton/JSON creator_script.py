@@ -13,6 +13,8 @@ from Autodesk.Revit.DB import (
     UnitTypeId,
 )
 
+import json
+
 doc = __revit__.ActiveUIDocument.Document
 
 
@@ -68,11 +70,17 @@ class Calc:
 
     def create_dict(self, components):
         """Adds the final result to dict"""
-
+        material_list = []
+        material_dict = {}
         for layer in range(self.get_compound_structor().LayerCount):
             material_id = self.get_compound_structor().GetMaterialId(layer)
             material = doc.GetElement(material_id)
-            components[self.type.__name__.lower()].append({material.MaterialCategory: round(self.get_thickness(layer))})
+            material_list.append({material.Name: {"thickness": round(self.get_thickness(layer))}})
+
+        for item in material_list:
+            material_dict.update(item)
+
+        components[self.type.__name__.lower()] = material_dict
 
         return components
 
@@ -80,16 +88,12 @@ class Calc:
 def show_components():
     """Creates the final dict"""
 
-    components = {
-        "wall": [],
-        "roofbase": [],
-        "floor": [],
-    }
-    parts = [Wall, Floor, RoofBase]
-    for part in parts:
-        result_dict = Calc(part).create_dict(components)
+    components = {}
+    types = [Wall, Floor, RoofBase]
+    for type in types:
+        json_dict = Calc(type).create_dict(components)
 
-    return result_dict
+    return json.dumps(json_dict)
 
 
 print(show_components())
