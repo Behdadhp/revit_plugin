@@ -14,7 +14,7 @@ Then it is necessary to reload the PyRevit in Revit. After adding the plugin to 
 The Icon is taken from [ichon8](https://icons8.com/).
 
 # Revit API Autocomplete in PyCharm 
-It can be set up using [ironpython-stubs](https://github.com/gtalarico/ironpython-stubs). In order to that, Just need to download the project and go to release folder anc copy the [stub.min](https://github.com/gtalarico/ironpython-stubs/tree/master/release/stubs.min)
+It can be set up using [ironpython-stubs](https://github.com/gtalarico/ironpython-stubs). In order to that, Just need to download the project and go to release folder and copy the [stub.min](https://github.com/gtalarico/ironpython-stubs/tree/master/release/stubs.min)
 and paste it to the folder of virtual environment. Finally you need to add this foolder to the interpreter path in PyCharm. 
 
 # Attention
