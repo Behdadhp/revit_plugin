@@ -35,7 +35,7 @@ class Calc:
         elif self.type == RoofBase:
             return FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Roofs).ToElements()
 
-    def get_items(self) -> list:
+    def get_items(self):
         """Checks if every item is instance of required type."""
 
         elements = []
@@ -45,7 +45,7 @@ class Calc:
                 elements.append(el)
         return elements
 
-    def get_element(self) -> list:
+    def get_element(self):
         """Loops through all items.
         if the item is instance of Wall, should be filtered for just outer walls.
         but if the item is not instance of wall, it will be return just the value of get_items()"""
@@ -59,7 +59,7 @@ class Calc:
             list_of_components.append(doc.GetElement(self.get_items()[0].Id))
         return list_of_components
 
-    def get_area(self) -> float:
+    def get_area(self):
         """Calculates the total area of selected component"""
 
         total_area = 0
@@ -69,7 +69,7 @@ class Calc:
         return total_area
 
     @staticmethod
-    def converts_to_squaremeters(area) -> float:
+    def converts_to_squaremeters(area):
         """converts the value to Square Meter"""
 
         return UnitUtils.ConvertFromInternalUnits(area, UnitTypeId.SquareMeters)
@@ -81,18 +81,18 @@ class Calc:
         return element_type.GetCompoundStructure()
 
     @staticmethod
-    def converts_to_millimeters(feet) -> float:
+    def converts_to_millimeters(feet):
         """converts the value to Millimeter"""
 
         return UnitUtils.ConvertFromInternalUnits(feet, UnitTypeId.Millimeters)
 
-    def get_thickness(self, layer) -> float:
+    def get_thickness(self, layer):
         """Calculates width of each element"""
 
         width = self.get_compound_structor().GetLayerWidth(layer)
         return self.converts_to_millimeters(width)
 
-    def create_dict(self, components) -> dict:
+    def create_dict(self, components):
         """Adds the final result to dict"""
         material_list = []
         material_dict = {}
