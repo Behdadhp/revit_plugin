@@ -96,13 +96,14 @@ class Calc:
         """Adds the final result to dict"""
         material_list = []
         material_dict = {}
+        n = 1
         # loops through all layers and add its name and thickness to the dict
         for layer in range(self.get_compound_structor().LayerCount):
             material_id = self.get_compound_structor().GetMaterialId(layer)
             material = doc.GetElement(material_id)
-            material_list.append({material.Name: {"thickness": round(self.get_thickness(layer)),
+            material_list.append({material.Name: {"thickness": round(self.get_thickness(layer)), "id": n
                                                   }})
-
+            n += 1
         # Adds the area of each component to the dict
         material_list.append({"area": "%.2f" % self.get_area()})
 
