@@ -1,11 +1,11 @@
 # Revit Plugin
 This script makes it possible to create a JSON from 3D model in Revit using [PyRevit](https://github.com/eirannejad/pyRevit). The JSON should
 contain infos about the wall, roof and floor and also their material thickness.
-To add this plugin to Revit, you need to copy the content of [JSON.pushbutton](JSON.pushbutton)
+To add this plugin to Revit, you need to put the content of this repository
 to this path:
 
 
-**Users\User\AppData\Roaming\pyRevit-Master\extensions\pyRevitJSON.extension\JSON.pushbutton\ModelToJSON.tab\Convertor.panel\JSON.pushbutton**
+**Users\User\AppData\Roaming\pyRevit-Master\extensions\pyRevitJSON.extension\ModelToJSON.tab\Convertor.panel\**
 
 
 <br />
