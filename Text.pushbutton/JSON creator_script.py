@@ -4,6 +4,9 @@ __title__ = "3DToText"
 __author__ = "Behdad Hajipour"
 
 import os
+import clr
+
+
 
 from Autodesk.Revit.DB import (
     FilteredElementCollector,
@@ -136,12 +139,24 @@ def show_components():
     return json.dumps(json_dict)
 
 
-desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-filename = input(
-    'The text file is going to be saved on your desktop. To continue provide a name for the file in this format "": ')
-file_path = os.path.join(desktop_path, (str(filename)) + ".txt")
+# Add references to the required assemblies
+clr.AddReference("System.Windows.Forms")
+clr.AddReference("System.Drawing")
 
-f = open(file_path, "w")
-f.write(show_components())
-f.close()
-print("File created successfully.")
+from System.Windows.Forms import SaveFileDialog, DialogResult
+
+
+# Create a SaveFileDialog instance
+save_dialog = SaveFileDialog()
+save_dialog.InitialDirectory = os.path.expanduser("~")
+save_dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+
+# Show the SaveFileDialog and check if the user clicked the Save button
+dialog_result = save_dialog.ShowDialog(None)
+if dialog_result == DialogResult.OK:
+    file_path = save_dialog.FileName
+    with open(file_path, "w") as f:
+        f.write(show_components())
+    print("File created successfully.")
+else:
+    print("No file path selected.")
