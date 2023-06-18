@@ -51,22 +51,38 @@ class Calc:
         but if the item is not instance of wall, it will be return just the value of get_items()"""
 
         list_of_components = []
+
         if isinstance(self.type, Wall):
-            for item in self.get_items():
-                if item.Name == "Aussenwand":
-                    list_of_components.append(doc.GetElement(item.Id))
+            return [item for item in self.get_items() if item.Name == "Aussenwand"]
         else:
             list_of_components.append(doc.GetElement(self.get_items()[0].Id))
         return list_of_components
 
+    def total_wall_length(self):
+        """Calculates the total length of wall"""
+
+        wall = [item for item in self.get_items() if item.Name == "Aussenwand"]
+        total_wall_length = 0
+        for item in wall:
+            area = item.LookupParameter("Length").AsDouble()
+            total_wall_length += (self.converts_to_millimeters(area) / 1000)
+        return total_wall_length
+
     def get_area(self):
         """Calculates the total area of selected component"""
 
+        wall = [item for item in self.get_items() if item.Name == "Aussenwand"]
         total_area = 0
-        for item in self.get_element():
-            area = item.LookupParameter("Area").AsDouble()
-            total_area += self.converts_to_squaremeters(area)
-        return total_area
+        if self.type.__name__.lower() == "wall":
+            for item in wall:
+                area = item.LookupParameter("Area").AsDouble()
+                total_area += self.converts_to_squaremeters(area)
+            return total_area
+        else:
+            for item in self.get_element():
+                area = item.LookupParameter("Area").AsDouble()
+                total_area += self.converts_to_squaremeters(area)
+            return total_area
 
     @staticmethod
     def converts_to_squaremeters(area):
@@ -111,10 +127,11 @@ class Calc:
                                                   }})
             roofbase_counter -= 1
             wall_floor_counter += 1
-        # Adds the area of each component to the dict
-        material_list.append({"area": "%.2f" % self.get_area()})
 
-        # updates the material_dict with the list created as material_list
+        material_list.append({"area": "%.2f" % self.get_area()})
+        if self.type.__name__.lower() == "wall":
+            material_list.append({"total_wall_length": "%.2f" % self.total_wall_length()})
+
         for item in material_list:
             material_dict.update(item)
 
