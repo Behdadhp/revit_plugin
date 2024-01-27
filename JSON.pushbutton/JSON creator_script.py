@@ -1,10 +1,8 @@
 """Converting a model to JSON"""
 
-__title__ = "3DToText"
+__title__ = "3DToJSON"
 __author__ = "Behdad Hajipour"
 
-import os
-import clr
 
 from Autodesk.Revit.DB import (
     FilteredElementCollector,
@@ -15,6 +13,7 @@ from Autodesk.Revit.DB import (
     UnitUtils,
     UnitTypeId,
 )
+
 
 import json
 
@@ -154,23 +153,4 @@ def show_components():
     return json.dumps(json_dict)
 
 
-# Add references to the required assemblies
-clr.AddReference("System.Windows.Forms")
-clr.AddReference("System.Drawing")
-
-from System.Windows.Forms import SaveFileDialog, DialogResult
-
-# Create a SaveFileDialog instance
-save_dialog = SaveFileDialog()
-save_dialog.InitialDirectory = os.path.expanduser("~")
-save_dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-
-# Show the SaveFileDialog and check if the user clicked the Save button
-dialog_result = save_dialog.ShowDialog(None)
-if dialog_result == DialogResult.OK:
-    file_path = save_dialog.FileName
-    with open(file_path, "w") as f:
-        f.write(show_components())
-    print("File created successfully.")
-else:
-    print("No file path selected.")
+print(show_components())

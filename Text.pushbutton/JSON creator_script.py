@@ -1,6 +1,6 @@
-"""Converting a model to JSON"""
+"""Converting a model to Text"""
 
-__title__ = "3DToJSON"
+__title__ = "3DToText"
 __author__ = "Behdad Hajipour"
 
 from Autodesk.Revit.DB import (
