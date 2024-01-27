@@ -13,6 +13,8 @@ from Autodesk.Revit.DB import (
     UnitTypeId,
 )
 
+import os
+import clr
 import json
 
 doc = __revit__.ActiveUIDocument.Document
